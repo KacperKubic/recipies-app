@@ -1,6 +1,7 @@
 import axios from 'axios';
 import './App.css';
 import {baseURL, apiKey} from './axiosConfig.js';
+import Quiz from './pages/Quiz';
 
 const App = () => {
 
@@ -14,7 +15,7 @@ const App = () => {
 
   return (
     <div className="app">
-      <button onClick={test}>Test</button>
+      <Quiz/>
     </div>
   );
 }
