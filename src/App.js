@@ -1,21 +1,23 @@
-import axios from 'axios';
-import './App.css';
-import {baseURL, apiKey} from './axiosConfig.js';
 import Quiz from './pages/Quiz';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import Homepage from './pages/Homepage';
 
 const App = () => {
+  const [quizEnded, setQuizEnded] = useState(false);
+  const quizDone = Cookies.get('done');
 
-  const test = () => {
-    axios.get(`${baseURL}?apiKey=${apiKey}&diet=vegan&number=5`).then(response => {
-      console.log(response)
-    }).catch(err => {
-      console.log(err)
-    })
-  }
+  useEffect(() => {
+    if(quizDone){
+      setQuizEnded(true)
+    }else{
+      return;
+    }
+  }, [quizDone])
 
   return (
     <div className="app">
-      <Quiz/>
+      {quizEnded ? <Homepage/> : <Quiz/>}
     </div>
   );
 }
