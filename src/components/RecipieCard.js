@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const RecepieCard = ({name, image}) => {
+const RecepieCard = ({name, image, id}) => {
     return ( 
         <div className="recepie-card">
             <img src={image} alt={name}></img>
-            <h3>{name}</h3>
+            <Link to={`/recipie/${id}`}><h3>{name}</h3></Link>
         </div>
      );
 }

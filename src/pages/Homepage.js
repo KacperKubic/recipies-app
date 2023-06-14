@@ -57,7 +57,7 @@ const Homepage = () => {
             </div>
             <div className="results">
                 {recipies.map((recipie) => {
-                    return <RecipieCard key={recipie.id} name={recipie.title} image={recipie.image}/>
+                    return <RecipieCard key={recipie.id} name={recipie.title} image={recipie.image} id={recipie.id}/>
                 })}
             </div>
         </div>
