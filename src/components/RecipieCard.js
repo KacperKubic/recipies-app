@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import '../styles/RecipieCard.css';
 
 const RecepieCard = ({name, image, id}) => {
     return ( 

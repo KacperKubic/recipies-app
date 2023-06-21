@@ -1,0 +1,26 @@
+.recepie-card{
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    background: #fff;
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.recepie-card img{
+    height: 150px;
+}
+
+.recepie-card h3{
+    color: #444;
+    font-size: 22px;
+    padding: 10px 0;
+}
+
+.recepie-card a{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.recepie-card h3:hover{
+    transform: scale(1.10);
+}
