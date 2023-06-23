@@ -31,10 +31,12 @@
 }
 
 .search button{
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 300px;
     border-radius: 999px;
-    border: 1px solid greenyellow;
+    background-color: white;
+    border: none;
+    cursor: pointer;
 }
 
 .results{

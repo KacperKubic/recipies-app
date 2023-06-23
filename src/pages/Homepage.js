@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import {baseURL, apiKey} from '../axiosConfig.js';
 import RecipieCard from '../components/RecipieCard.js';
 import Title from '../components/Title.js';
+import { FaSearch } from 'react-icons/fa'
 import '../styles/Homepage.css'
 
 const Homepage = () => {
     const [diet, setDiet] = useState('');
     const [gluten, setGluten] = useState('');
     const [basic, setBasic] = useState('')
+    const [query, setQuery] = useState('')
 
     const [recipies, setRecipies] = useState([])
 
@@ -49,13 +51,23 @@ const Homepage = () => {
         } 
     }, [gluten, diet, basic])
 
+
+    const search = (e) => {
+        e.preventDefault()
+        axios.get(`${baseURL}?apiKey=${apiKey}&diet=${diet}&gluten=${gluten}&number=5&query=${query}`).then(response => {
+            setRecipies(response.data.results)
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
     return ( 
         <div className="homepage">
             <Title/>
             <div className="search">
-                <form>
-                    <input placeholder="search for recepies"/>
-                    <button>Search</button>
+                <form onSubmit={search}>
+                    <input placeholder='Search for recepies...' value={query} onChange={(e)=>setQuery(e.target.value)}/>
+                    <button type="submit"><FaSearch/></button>
                 </form>
             </div>
             <div className="results">
