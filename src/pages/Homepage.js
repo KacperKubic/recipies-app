@@ -12,6 +12,8 @@ const Homepage = () => {
     const [gluten, setGluten] = useState('');
     const [basic, setBasic] = useState('')
     const [query, setQuery] = useState('')
+    const [error, setError] = useState(false);
+    const [noResults, setNoResults] = useState(false)
 
     const [recipies, setRecipies] = useState([])
 
@@ -27,26 +29,26 @@ const Homepage = () => {
             axios.get(`${baseURL}?apiKey=${apiKey}&diet=${diet},${gluten}&number=5`).then(response => {
                 setRecipies(response.data.results)
             }).catch(err => {
-                console.log(err)
+                setError(true)
             })
         }
         else if(diet){
             axios.get(`${baseURL}?apiKey=${apiKey}&diet=${diet}&number=5`).then(response => {
                 setRecipies(response.data.results)
             }).catch(err => {
-                console.log(err)
+                setError(true)
             })
         }else if(gluten){
             axios.get(`${baseURL}?apiKey=${apiKey}&diet=${gluten}&number=5`).then(response => {
                 setRecipies(response.data.results)
             }).catch(err => {
-                console.log(err)
+                setError(true)
             })
         }else if(basic){
             axios.get(`${baseURL}?apiKey=${apiKey}&number=10`).then(response => {
                 setRecipies(response.data.results)
             }).catch(err => {
-                console.log(err)
+                setError(true)
             })
         } 
     }, [gluten, diet, basic])
@@ -55,9 +57,14 @@ const Homepage = () => {
     const search = (e) => {
         e.preventDefault()
         axios.get(`${baseURL}?apiKey=${apiKey}&diet=${diet}&gluten=${gluten}&number=5&query=${query}`).then(response => {
-            setRecipies(response.data.results)
+            if(response.data.results.length === 0){
+                setNoResults(true)
+            }else{
+                setNoResults(false)
+                setRecipies(response.data.results)
+            }
         }).catch(err => {
-            console.log(err)
+            setError(true)
         })
     }
 
@@ -70,11 +77,25 @@ const Homepage = () => {
                     <button type="submit"><FaSearch/></button>
                 </form>
             </div>
-            <div className="results">
-                {recipies.map((recipie) => {
-                    return <RecipieCard key={recipie.id} name={recipie.title} image={recipie.image} id={recipie.id}/>
-                })}
-            </div>
+                {  
+                error ? 
+                    (
+                        <div className="error">Something went wrong, please try refreshing the page, clearing cookies or come back later. Sorry for all difficulties</div>
+                    ) : (
+                        <div className="results">
+                            {
+                            noResults ?
+                                (
+                                    <p>No results found</p>
+                                ) : (
+                                    recipies.map((recipie) => {
+                                        return <RecipieCard key={recipie.id} name={recipie.title} image={recipie.image} id={recipie.id}/>
+                                    })
+                                )
+                            }
+                        </div>
+                    )
+                }
         </div>
      );
 }
